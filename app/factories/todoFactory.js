@@ -17,18 +17,36 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 		});
 	};
 
-	let deleteItemFromFirebase = () => {
-		// return $q( (resolve, reject) => {
-		// 	$http.put(`${FirebaseUrl}todos/${taskObj}.id.json`);
-		// });
+	let deleteItemFromFirebase = (taskObjId) => {
+		return $q( (resolve, reject) => {
+			if (taskObjId) {
+					$http.delete(`${FirebaseUrl}todos/${taskObjId}.json`)
+					.then( (data) => {
+						resolve(data);
+					})
+					.catch( (err) => {
+						reject(err);
+					});
+			} else {
+				console.log("There was a mistake trying to delete this!");
+			}
+		});
 	};
 
-	let putObjectOnFB = (taskObj) => {
+	function putObjectOnFB (taskObj) {
 		//PUT on fb
-		// return $q( (resolve, reject) => {
-		// 	$http.put(`${FirebaseUrl}todos/${taskObj}.id.json`);
-		// });
-	};
+		return $q( (resolve, reject) => {
+			let itemId = taskObj.id;
+			$http.put(`${FirebaseUrl}todos/${itemId}.json`,
+				angular.toJson(taskObj))
+			.then( (response) => {
+				resolve(response);
+			})
+			.catch( (err) => {
+				reject(err);
+			});
+		});
+	}
 
 	let postNewTask = (newObj) => {
 		return $q( (resolve, reject) => {
@@ -43,5 +61,5 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 		});
 	};
 
-	return { getTodoList, postNewTask };
+	return { getTodoList, postNewTask, deleteItemFromFirebase, putObjectOnFB };
 });

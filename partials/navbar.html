@@ -1,0 +1,39 @@
+<nav ng-controller="NavController" class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Todo App</a>
+      </div>
+<!-- search bar -->
+      <div class="col-xs-6 searchBox" ng-show="isLoggedIn">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </span>
+          <input type="search" class="form-control" placeholder="Search..." ng-model="searchText.searchTerm">
+        </div>
+      </div>
+
+<!--           <div class="row">
+            <div class="col-xs-6 col-xs-offset-3"></div>
+            <button ng-click="loadForm()" class="col-xs-6 btn btn-success">New Item</button>
+            <button ng-click="loadListView()" class="col-xs-6 btn btn-info"> All Items</button>
+          </div> -->
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <!-- TODO: Use Angular to loop through nav items -->
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-show="!isLoggedIn"><a ng-href="#!/login">Log In</a></li>
+        <li ng-show="isLoggedIn"><a ng-href="#!/todo/add">Add New Item</a></li>
+        <li ng-show="isLoggedIn"><a ng-href="#!/todo/view">View All Items</a></li>
+        <li ng-show="isLoggedIn"><a ng-href="#!/" ng-click="logout()">Log Out</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

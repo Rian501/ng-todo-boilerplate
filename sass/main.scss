@@ -1,5 +1,10 @@
-$bg-color: SandyBrown ;
+$bg-color: #bad ;
 
 body {
   background-color: $bg-color;
+  color: purple
+}
+
+.input-group {
+	margin-top: 8px;
 }

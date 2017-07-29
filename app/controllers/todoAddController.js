@@ -1,7 +1,7 @@
 'use strict';
 
 todoApp.controller('TodoAddController', function($scope, TodoFactory, UserFactory, $window) {
-
+	$scope.pageTitle="Add New Item";
 	$scope.todoItem = {
 		assignedTo: "",
 		dependencies: "",

@@ -17,6 +17,19 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 		});
 	};
 
+	let getSingleToDoItem = (taskId) => {
+		console.log("fetching one item!", taskId);
+		return $q( (resolve, reject) => {
+			$http.get(`${FirebaseUrl}todos/${taskId}.json`)
+			.then( (item) => {
+				resolve(item.data);
+			})
+			.catch( (err) => {
+				reject(err);
+			});
+		});
+	};
+
 	let deleteItemFromFirebase = (taskObjId) => {
 		return $q( (resolve, reject) => {
 			if (taskObjId) {
@@ -33,11 +46,12 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 		});
 	};
 
-	function putObjectOnFB (taskObj) {
-		//PUT on fb
+
+	function updateObjectOnFB (taskObj, taskId) {
+		console.log("firingon update obj", taskObj, taskId);
 		return $q( (resolve, reject) => {
-			let itemId = taskObj.id;
-			$http.put(`${FirebaseUrl}todos/${itemId}.json`,
+			if (taskId) {
+			$http.put(`${FirebaseUrl}todos/${taskId}.json`,
 				angular.toJson(taskObj))
 			.then( (response) => {
 				resolve(response);
@@ -45,6 +59,7 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 			.catch( (err) => {
 				reject(err);
 			});
+			}
 		});
 	}
 
@@ -61,5 +76,5 @@ todoApp.factory("TodoFactory", function($q, $http, FirebaseUrl) {
 		});
 	};
 
-	return { getTodoList, postNewTask, deleteItemFromFirebase, putObjectOnFB };
+	return { getTodoList, postNewTask, deleteItemFromFirebase, updateObjectOnFB, getSingleToDoItem };
 });

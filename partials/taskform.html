@@ -2,7 +2,6 @@
   <h1>New Todo</h1>
   <div class="form-group">
     <label>Task Description</label>
-    <!-- TODO: Hook up this form to our JS for submitting -->
     <input ng-model="todoItem.task" type="text" class="form-control" placeholder="Some important task" />
   </div>
   <div class="form-group">
@@ -15,7 +14,7 @@
   </div>
   <div class="form-group">
     <label>Location</label>
-    <input ng-model="todoItem.location" type="text" class="form-control" placeholder="attic" />
+    <input ng-model="todoItem.location" type="text" class="form-control" placeholder="attic">
   </div>
   <div class="form-group">
     <label>Urgency</label>
@@ -26,5 +25,5 @@
     <input ng-model="todoItem.dependencies" type="text" class="form-control" placeholder="brush chipper, monkey chow, the one ring" />
   </div>
   <!-- TODO: bind this button to a function -->
-  <button ng-click="saveTodoItem()" class="btn btn-default">Submit</button>
+  <button ng-click="saveTodoItem(todoItem)" class="btn btn-default">Submit</button>
 </div>

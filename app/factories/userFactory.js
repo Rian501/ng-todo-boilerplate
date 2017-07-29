@@ -9,13 +9,19 @@ todoApp.factory("UserFactory", function($q, $http, FirebaseUrl, FBCreds) {
 	firebase.initializeApp(config);
 
 	let currentUser = null;
-	firebase.auth().onAuthStateChanged( (user) => {
-		if (user) {
-			currentUser = user.uid;
-		} else {
-			currentUser = null;
-		}
-	});
+	let isAuthenticated = function() {
+		console.log("function isAuthenticated called");
+		return new Promise( (resolve, reject) => {
+			firebase.auth().onAuthStateChanged( function(user) {
+				if (user) {
+					currentUser = user.uid;
+					resolve(true);
+				} else {
+					resolve(false);
+				}
+			});
+		});
+	};
 
 	let getUser = () => {
 		return currentUser;
@@ -31,14 +37,20 @@ todoApp.factory("UserFactory", function($q, $http, FirebaseUrl, FBCreds) {
 
 	//log in
 	let logInUser = (userObj) => {
-		return firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password)
-		.catch( (err) => {
+		return $q( (resolve, reject) => {
+			firebase.auth().signInWithEmailAndPassword(userObj.email, userObj.password)
+			.then( (user) => {
+				currentUser = user.uid;
+				resolve(user);
+			})
+			.catch( (err) => {
 			console.log("Error logging in", err.message);
+			});
 		});
 	};
 
 	//log out
-	let logOutUser = (userObj) => {
+	let logOutUser = () => {
 		return firebase.auth().signOut()
 		.catch( (err) => {
 			console.log("error logging out", err.message);
@@ -46,5 +58,5 @@ todoApp.factory("UserFactory", function($q, $http, FirebaseUrl, FBCreds) {
 	};
 
 	console.log("it's hooked up", firebase);
-	return { getUser, logOutUser, logInUser, createUser };
+	return { getUser, logOutUser, logInUser, createUser, isAuthenticated };
 });

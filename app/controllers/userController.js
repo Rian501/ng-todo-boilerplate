@@ -18,14 +18,12 @@ todoApp.controller("UserController", function ($scope, $window, UserFactory) {
 		});
 	};
 
-//use "ng-model" and account.email
-
 	$scope.login = () => {
 		UserFactory.logInUser($scope.account)
 		.then( (userData) => {
+			//redirect them to the list page
 			$window.location.href='#!/todo/view';
 		});
-		//redirect them to the list page
 	};
 
 
